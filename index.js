@@ -3,9 +3,30 @@ const cors = require("cors");
 const app = express();
 const port = 8080;
 const models = require('./models');
+const multer = require("multer");
+const upload = multer({
+  storage:multer.diskStorage({
+    destination: function(req,file,cb){
+      cb(null,"uploads/");
+    },
+    filename:function(req,file,cb){
+      cb(null,file.originalname);
+    }
+  })
+});
 
 app.use(express.json());
 app.use(cors());
+app.use("/uploads",express.static("uploads"));
+
+// image
+app.post('/image',upload.single('image'),(req,res)=>{
+  const file = req.file;
+  console.log(file);
+  res.send({
+    imageUrl:file.path
+  })
+})
 
 // products
 app.get('/products',(req,res)=>{
