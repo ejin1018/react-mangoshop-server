@@ -48,7 +48,7 @@ app.post('/image',upload.single('image'),(req,res)=>{
 app.get('/products',(req,res)=>{
   models.Product.findAll({
     order:[['createdAt','DESC']],
-    attributes:['id','name','price','seller','imageUrl','description','soldout']
+    attributes:['id','name','price','seller','imageUrl','description','soldout','createAt']
   })
   .then((result)=>{
     console.log('product 조회결과 ',result);
