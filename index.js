@@ -58,6 +58,22 @@ app.get('/products',(req,res)=>{
     res.send('에러 발생');
   });
 })
+
+// READ
+app.get("/todos", (req, res) => {
+  models.Todo.findAll({
+    order: [["id", "ASC"]],
+    attributes: ["id", "subject", "description", "completed"],
+  })
+    .then((result) => {
+      res.send({ todos: result });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.send("에러발생");
+    });
+}); 
+
   // 상품 생성시 데이터 베이스에 추가하기
 app.post('/products',(req,res)=>{
   const body = req.body;
@@ -71,6 +87,22 @@ app.post('/products',(req,res)=>{
   }).catch((error)=>{
     console.error(error);
     res.send('상품 업로드에 문제가 발생했습니다');
+  })
+
+})
+
+// CREATE
+app.post('/todos',(req,res)=>{
+  const body = req.body;
+  const {subject,description,completed} = body;
+
+  models.Todo.create({
+    subject,description,completed
+  }).then((result)=>{
+    res.send({result});
+  }).catch((error)=>{
+    console.error(error);
+    res.send('😣 업로드에 문제가 발생했습니다');
   })
 
 })
@@ -90,6 +122,34 @@ app.get('/products/:id',(req,res)=>{
     console.error(errors)
     res.send('상품 조회 결과 오류가 발생했습니다.')
   });
+})
+
+// UPDATE
+app.post('/todos/:id',(req,res)=>{
+  const {id} = req.params;
+  models.Todo.findOne({
+    where:{ id },
+  }).then((item)=>{
+    const completedValue = item.completed === 0 ? 1 : 0;
+    models.Todo.update(
+      {completed: completedValue},
+      {where:{id}}
+    ).then(()=>{
+      res.send({result:true})
+    }).catch((err)=>{console.log(err)})
+  }).catch((err)=>{
+    res.status(500).send('상품 조회 결과 오류가 발생했습니다.')
+  });
+})
+
+// DELETE
+app.delete('/todos/:id',(req,res)=>{
+  const { id } = req.params;
+  models.Todo.destroy({where:{id}}).then(()=>{
+    res.send('삭제완.')
+  }).catch((err)=>{
+    res.status(501).send(err)
+  })
 })
 
 // login
