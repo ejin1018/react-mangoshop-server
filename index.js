@@ -28,7 +28,7 @@ app.post('/image',upload.single('image'),(req,res)=>{
   })
 })
 
-// meets
+// meets 조회
 app.get("/meets", (req, res) => {
   models.Meets.findAll({
     order: [["id", "DESC"]],
@@ -42,6 +42,20 @@ app.get("/meets", (req, res) => {
       res.send("에러발생");
     });
 });
+
+// meets 등록
+app.post("/meets",(req, res)=>{
+  const body = req.body;
+  const {when,where,cafe,who} = body;
+  models.Meets.create({
+    when,where,cafe,who
+  }).then((result)=>{
+    console.log(result);
+    res.send({result});
+  }).catch((error)=>{
+    console.log(error);
+  })
+})
 
 // 실행해!
 app.listen(port,()=>{
