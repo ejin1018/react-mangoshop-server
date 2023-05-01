@@ -32,7 +32,7 @@ app.post('/image',upload.single('image'),(req,res)=>{
 app.get("/meets", (req, res) => {
   models.Meets.findAll({
     order: [["id", "DESC"]],
-    attributes: ["when", "where", "cafe", "who"],
+    attributes: ["when", "where", "cafe", "who","sango","aek","gugu","ejin"],
   })
     .then((result) => {
       res.send({ meets: result });
