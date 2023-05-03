@@ -32,7 +32,7 @@ app.post('/image',upload.single('image'),(req,res)=>{
 app.get("/meets", (req, res) => {
   models.Meets.findAll({
     order: [["id", "DESC"]],
-    attributes: ["when", "where", "cafe", "who","sango","aek","gugu","ejin"],
+    attributes: ["id","when", "where", "cafe", "who","sango","aek","gugu","ejin"],
   })
     .then((result) => {
       res.send({ meets: result });
@@ -54,6 +54,16 @@ app.post("/meets",(req, res)=>{
     res.send({result});
   }).catch((error)=>{
     console.log(error);
+  })
+})
+
+// meets 삭제
+app.delete("/meets/:id",(req,res)=>{
+  const {id} = req.params;
+  models.Meets.destroy({where:{id}}).then(()=>{
+    res.send('delete.')
+  }).catch((err)=>{
+    res.send(err)
   })
 })
 
