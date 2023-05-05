@@ -1,9 +1,11 @@
 const express = require("express");
 const cors = require("cors");
-const app = express();
-const port = process.env.PORT||8081;
 const models = require('./models');
 const multer = require("multer");
+
+const app = express();
+const port = process.env.PORT||8081;
+
 const upload = multer({
   storage:multer.diskStorage({
     destination: function(req,file,cb){
@@ -50,10 +52,21 @@ app.post("/meets",(req, res)=>{
   models.Meets.create({
     when,where,cafe,who
   }).then((result)=>{
-    console.log(result);
     res.send({result});
   }).catch((error)=>{
     console.log(error);
+  })
+})
+
+// record 등록
+app.post("/meets/:id/sango",(req,res)=>{
+  const {id} = req.params;
+  models.Meets.create({
+    where:{id}
+  }).then((result)=>{
+    res.send({result})
+  }).catch((err)=>{
+    res.send(err)
   })
 })
 
