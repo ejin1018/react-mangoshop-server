@@ -61,12 +61,17 @@ app.post("/meets",(req, res)=>{
 // record 등록
 app.post("/meets/:id/sango",(req,res)=>{
   const {id} = req.params;
-  models.Meets.create({
-    where:{id}
-  }).then((result)=>{
-    res.send({result})
-  }).catch((err)=>{
-    res.send(err)
+  models.Meets.findOne({
+    where:{id},
+  }).then((record)=>{
+    models.Meets.update(
+      {sango:record.sango},
+      {where:{id}}
+    ).then((result)=>{
+      res.send(result)
+    }).catch((err)=>{console.log(err)})
+  }).catch(()=>{
+    console.log('단일 기록 조회 실패')
   })
 })
 
