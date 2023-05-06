@@ -59,7 +59,7 @@ app.post("/meets",(req, res)=>{
 })
 
 // record 등록
-app.post("/meets/:id/sango",(req,res)=>{
+app.post("/meets/:id",(req,res)=>{
   const {id} = req.params;
   models.Meets.findOne({
     where:{id},
