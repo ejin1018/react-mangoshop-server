@@ -60,19 +60,20 @@ app.post("/meets",(req, res)=>{
 
 // record 등록
 app.post("/meets/:id",(req,res)=>{
-  const {id} = req.params;
-  models.Meets.findOne({
-    where:{id},
-  }).then((record)=>{
-    models.Meets.update(
-      {sango:record.sango},
-      {where:{id}}
-    ).then((result)=>{
-      res.send(result)
-    }).catch((err)=>{console.log(err)})
-  }).catch(()=>{
-    console.log('단일 기록 조회 실패')
+  console.log('reqreqreq🧚',req.body.sango)
+  let {id} = req.params;
+
+  models.Meets.update(
+    {sango:req.body.sango},
+    {where:{id}}
+  )
+  .then((record)=>{
+    console.log('기록 등록 성공',record);
   })
+  .catch((err)=>{
+    console.log('기록 등록 실패',err)
+  })
+
 })
 
 // meets 삭제
