@@ -45,6 +45,22 @@ app.get("/meets", (req, res) => {
     });
 });
 
+// meets id별로 조회
+app.get("/meets/:id",(req,res)=>{
+  models.Meets.findAll({
+    limit:1,
+    order: [["id", "DESC"]],
+    attributes: ["id","when", "where", "cafe", "who","sango","aek","gugu","ejin"],
+  })
+    .then((result) => {
+      res.send({ meets: result });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.send("에러발생");
+    });
+})
+
 // meets 등록
 app.post("/meets",(req, res)=>{
   const body = req.body;
