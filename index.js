@@ -47,9 +47,10 @@ app.get("/meets", (req, res) => {
 
 // meets id별로 조회
 app.get("/meets/:id",(req,res)=>{
-  models.Meets.findAll({
-    limit:1,
-    order: [["id", "DESC"]],
+  const params = req.params;
+  const { id } = params;
+  models.Meets.findOne({
+    where: { id: id },
     attributes: ["id","when", "where", "cafe", "who","sango","aek","gugu","ejin"],
   })
     .then((result) => {
@@ -76,7 +77,6 @@ app.post("/meets",(req, res)=>{
 
 // record 등록
 app.post("/meets/:id",(req,res)=>{
-  console.log('reqreqreq🧚',req.body.sango)
   let {id} = req.params;
 
   models.Meets.update(
