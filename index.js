@@ -80,10 +80,12 @@ app.post("/meets/:id",(req,res)=>{
   let {id} = req.params;
 
   models.Meets.update(
-    {sango:req.body.sango},
-    {aek:req.body.aek},
-    {gugu:req.body.gugu},
-    {ejin:req.body.ejin},
+    {
+      sango:req.body.sango,
+      aek:req.body.aek,
+      gugu:req.body.gugu,
+      ejin:req.body.ejin
+    },
     {where:{id}}
   )
   .then((record)=>{
