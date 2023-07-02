@@ -30,6 +30,7 @@ app.post('/image',upload.single('image'),(req,res)=>{
   })
 })
 
+// when we met 
 // meets 조회
 app.get("/meets", (req, res) => {
   models.Meets.findAll({
@@ -104,6 +105,34 @@ app.delete("/meets/:id",(req,res)=>{
     res.send('delete.')
   }).catch((err)=>{
     res.send(err)
+  })
+})
+
+// an on
+// anonUser 조회
+app.get("/anonuser",(req,res)=>{
+  models.AnonUser.findAll({
+    order:["id","DESC"],
+    attributes:["email","password","nickname"]
+  })
+  .then((result)=>{
+    res.send({anonUser:result});
+    console.log("get an on user")
+  })
+  .catch((err)=>{
+    res.send("안온 회원 조회 실패");
+  })
+})
+// anonUser 추가 (회원가입)
+app.post("/anonuser",(req,res)=>{
+  const body = req.body;
+  const {email,password,nickname} = body;
+  models.AnonUser.create({
+    email,password,nickname
+  }).then((result)=>{
+    res.send({result});
+  }).catch((error)=>{
+    console.log(error)
   })
 })
 
