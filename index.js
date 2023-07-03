@@ -112,7 +112,7 @@ app.delete("/meets/:id",(req,res)=>{
 // anonUser 조회
 app.get("/anonuser",(req,res)=>{
   models.AnonUser.findAll({
-    order:["id","DESC"],
+    order:[["id","DESC"]],
     attributes:["email","password","nickname"]
   })
   .then((result)=>{
@@ -120,6 +120,7 @@ app.get("/anonuser",(req,res)=>{
     console.log("get an on user")
   })
   .catch((err)=>{
+    console.log(err);
     res.send("안온 회원 조회 실패");
   })
 })
