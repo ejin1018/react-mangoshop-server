@@ -12,6 +12,10 @@ module.exports = (Sequelize,DataTypes) =>{
       type:DataTypes.STRING(10),
       allowNull:false
     },
+    calendar:{
+      type:DataTypes.STRING(10000),
+      allowNull:true
+    }
   });
   return anonUser;
 }

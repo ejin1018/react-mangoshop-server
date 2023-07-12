@@ -113,7 +113,7 @@ app.delete("/meets/:id",(req,res)=>{
 app.get("/anonuser",(req,res)=>{
   models.AnonUser.findAll({
     order:[["id","DESC"]],
-    attributes:["id","email","password","nickname"]
+    attributes:["id","email","password","nickname","calendar"]
   })
   .then((result)=>{
     res.send({anonUser:result});
