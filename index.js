@@ -136,6 +136,40 @@ app.post("/anonuser",(req,res)=>{
     console.log(error)
   })
 })
+// anonUser id 별로 조회
+app.get("/anonuser/:id",(req,res)=>{
+  const params = req.params;
+  const { id } = params;
+  models.AnonUser.findOne({
+    where: { id: id },
+    attributes:["id","email","password","nickname","calendar"]
+  })
+  .then((result)=>{
+    res.send({anonUser:result});
+    console.log("get an on user")
+  })
+  .catch((err)=>{
+    console.log(err);
+    res.send("안온 회원 조회 실패");
+  })
+})
+// anonUser calendar 등록
+app.post("/anonuser/:id",(req,res)=>{
+  const params = req.params;
+  const { id } = params;
+  models.AnonUser.update(
+    {
+      calendar:req.body.calendar
+    },
+    {where:{ id }}
+  )
+  .then((record)=>{
+    console.log('일정 등록 성공',record);
+  })
+  .catch((err)=>{
+    console.log('일정 등록 실패',err)
+  })
+})
 
 // 실행해!
 app.listen(port,()=>{
