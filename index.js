@@ -151,29 +151,13 @@ app.get("/anonuser/:id",(req,res)=>{
     res.send("안온 회원 조회 실패");
   })
 })
-// anonUser calendar 등록
+// anonUser calendar,movingday 등록
 app.post("/anonuser/:id",(req,res)=>{
   const params = req.params;
   const { id } = params;
   models.AnonUser.update(
     {
-      calendar:req.body.calendar
-    },
-    {where:{ id }}
-  )
-  .then((record)=>{
-    console.log('일정 등록 성공',record);
-  })
-  .catch((err)=>{
-    console.log('일정 등록 실패',err)
-  })
-})
-// anonUser movingday 등록
-app.post("/anonuser/:id",(req,res)=>{
-  const params = req.params;
-  const { id } = params;
-  models.AnonUser.update(
-    {
+      calendar:req.body.calendar,
       movingday:req.body.movingday
     },
     {where:{ id }}
