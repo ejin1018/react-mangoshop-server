@@ -168,6 +168,23 @@ app.post("/anonuser/:id",(req,res)=>{
     console.log('일정 등록 실패',err)
   })
 })
+// anonUser movingday 등록
+app.post("/anonuser/:id",(req,res)=>{
+  const params = req.params;
+  const { id } = params;
+  models.AnonUser.update(
+    {
+      movingday:req.body.movingday
+    },
+    {where:{ id }}
+  )
+  .then((record)=>{
+    console.log('일정 등록 성공',record);
+  })
+  .catch((err)=>{
+    console.log('일정 등록 실패',err)
+  })
+})
 
 // 실행해!
 app.listen(port,()=>{
