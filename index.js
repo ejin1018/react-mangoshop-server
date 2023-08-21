@@ -153,8 +153,8 @@ app.get("/anonuser/:id",(req,res)=>{
 })
 // anonUser calendar,movingday 등록
 app.post("/anonuser/:id",(req,res)=>{
-  const params = req.params;
-  const { id } = params;
+  const { id } = req.params;
+  
   models.AnonUser.update(
     {
       calendar:req.body.calendar,
